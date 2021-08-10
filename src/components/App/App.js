@@ -16,13 +16,19 @@ const App = () => {
       .catch(err => setError(err))
   }, [orders])
 
+  const addOrder = (burrito) => {
+    setOrders([...orders, burrito])
+    postOrder(burrito)
+  }
+
   return (
     <main className="App">
       <header>
         <h1>Burrito Builder</h1>
       {error && <h2>{error}</h2>}
         <OrderForm 
-          />
+          addOrder={addOrder}
+        />
       </header>
         <Orders 
         orders={orders}
