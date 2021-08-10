@@ -1,15 +1,9 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import './OrderForm.css';
 
-class OrderForm extends Component {
-  constructor(props) {
-    super();
-    this.props = props;
-    this.state = {
-      name: '',
-      ingredients: []
-    };
-  }
-
+const OrderForm = () => {
+  const [ name, setName ] = useState('');
+  const [ ingredients, setIngredients ] = useState([]);
 
   handleSubmit = e => {
     e.preventDefault();
