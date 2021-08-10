@@ -10,11 +10,19 @@ const App = () => {
   const [ error, setError ] = useState('');
 
 
+const getAllOrders = async () => {
+  setError('');
+  try { 
+    let data = await getOrders()
+    setOrders(data.orders)
+  } catch (error) {
+    setError(error.message)
+  }
+}
+
   useEffect(() => {
-    getOrders()
-      .then(data => setOrders(data.orders))
-      .catch(err => setError(err))
-  }, [orders])
+    getAllOrders()
+  }, [])
 
   const addOrder = (burrito) => {
     setOrders([...orders, burrito])
