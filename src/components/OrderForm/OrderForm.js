@@ -7,11 +7,11 @@ const OrderForm = ({ addOrder }) => {
   const [ orderError, setError ] = useState('');
 
   const possibleIngredients = ['beans', 'steak', 'carnitas', 'sofritas', 'lettuce', 'queso fresco', 'pico de gallo', 'hot sauce', 'guacamole', 'jalapenos', 'cilantro', 'sour cream'];
-  const ingredientButtons = possibleIngredients.map((ingredient, i) => {
+  const ingredientButtons = possibleIngredients.map((ingredient) => {
       return (
           <button
-            key={i}
-            id={i}
+            key={ingredient}
+            id={ingredient}
             name={ingredient}
             value={ingredient}
             onClick={(e) => checkIngredients(e)}    
