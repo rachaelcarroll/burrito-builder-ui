@@ -1,6 +1,6 @@
 export const getOrders = async () => {
   const response = await fetch('http://localhost:3001/api/v1/orders')
-  const data = await response.json()
+  const data = await checkForErrors(response);
   return data
 }
 
@@ -11,7 +11,7 @@ export const postOrder = async (burrito) => {
     body: JSON.stringify(burrito)
   })
 
-  const data = await response.json()
+  const data = await checkForErrors(response);
   return data
 }
 
@@ -19,9 +19,7 @@ export const checkForErrors = response => {
   if (response.status === 404) {
     throw new Error('Oops, something went wrong. Please try again later.');
   } else if (response.status === 500) {
-    throw new Error(
-      "Our servers seem to be down, please check back later!"
-    );
+    throw new Error('Our servers seem to be down, please check back later!');
   } else if (response.ok) {
     return response.json();
   } else {
