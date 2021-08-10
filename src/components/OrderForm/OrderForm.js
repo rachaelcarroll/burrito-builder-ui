@@ -33,7 +33,7 @@ const OrderForm = ({ addOrder }) => {
     }
   }
 
-  clearInputs = () => {
+  const clearInputs = () => {
     setName('');
     setIngredients([]);
     setError('');
@@ -49,10 +49,10 @@ const OrderForm = ({ addOrder }) => {
 
     if (ingredients.length === 0) {
       setError('Please add some ingredients to your burrito!');
-      alert(error)
+      alert(orderError)
     } else if (!name) {
       setError('Please enter a name for this order!')
-      alert(error)
+      alert(orderError)
     } else {
       addOrder(burritoOrder)
       clearInputs()
