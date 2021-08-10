@@ -5,9 +5,8 @@ const OrderForm = ({ addOrder }) => {
   const [ name, setName ] = useState('');
   const [ ingredients, setIngredients ] = useState([]);
 
-  const listIngredients = () => {
-    const possibleIngredients = ['beans', 'steak', 'carnitas', 'sofritas', 'lettuce', 'queso fresco', 'pico de gallo', 'hot sauce', 'guacamole', 'jalapenos', 'cilantro', 'sour cream'];
-    return ingredientButtons = possibleIngredients.map((ingredient, i) => {
+  const possibleIngredients = ['beans', 'steak', 'carnitas', 'sofritas', 'lettuce', 'queso fresco', 'pico de gallo', 'hot sauce', 'guacamole', 'jalapenos', 'cilantro', 'sour cream'];
+  const ingredientButtons = possibleIngredients.map((ingredient, i) => {
       return (
           <button
             key={i}
@@ -20,7 +19,7 @@ const OrderForm = ({ addOrder }) => {
           </button>
         );
     });
-  }
+
 
   const checkIngredients = (ingredient) => {
     if (!ingredients.includes(ingredient)) {
@@ -54,7 +53,6 @@ const OrderForm = ({ addOrder }) => {
       addOrder(burritoOrder)
       clearInputs()
     }
-
   }
 
     return (
@@ -69,14 +67,15 @@ const OrderForm = ({ addOrder }) => {
 
         { ingredientButtons }
 
-        <p>Order: { this.state.ingredients.join(', ') || 'Nothing selected' }</p>
+        <p className='order-details'>
+          Order: {ingredients.join(', ') || 'Nothing selected' }
+        </p>
 
-        <button onClick={e => this.handleSubmit(e)}>
+        <button onClick={(e) => submitOrder(e)}>
           Submit Order
         </button>
       </form>
-    )
+    );
   }
-}
 
 export default OrderForm;
