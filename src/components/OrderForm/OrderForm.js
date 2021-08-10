@@ -4,6 +4,7 @@ import './OrderForm.css';
 const OrderForm = ({ addOrder }) => {
   const [ name, setName ] = useState('');
   const [ ingredients, setIngredients ] = useState([]);
+  const [ orderError, setError ] = useState('');
 
   const possibleIngredients = ['beans', 'steak', 'carnitas', 'sofritas', 'lettuce', 'queso fresco', 'pico de gallo', 'hot sauce', 'guacamole', 'jalapenos', 'cilantro', 'sour cream'];
   const ingredientButtons = possibleIngredients.map((ingredient, i) => {
@@ -35,6 +36,7 @@ const OrderForm = ({ addOrder }) => {
   clearInputs = () => {
     setName('');
     setIngredients([]);
+    setError('');
   }
 
   const submitOrder = (e) => {
@@ -46,9 +48,11 @@ const OrderForm = ({ addOrder }) => {
     }
 
     if (ingredients.length === 0) {
-      alert('Please add some ingredients to your burrito!')
+      setError('Please add some ingredients to your burrito!');
+      alert(error)
     } else if (!name) {
-      alert('Please enter a name for this order!')
+      setError('Please enter a name for this order!')
+      alert(error)
     } else {
       addOrder(burritoOrder)
       clearInputs()
