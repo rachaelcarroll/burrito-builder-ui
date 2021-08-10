@@ -24,25 +24,28 @@ const getAllOrders = async () => {
     getAllOrders()
   }, [])
 
-  const addOrder = (burrito) => {
-    setOrders([...orders, burrito])
-    postOrder(burrito)
+  const addOrder = async (burrito) => {
+    try {
+      setOrders([...orders, burrito])
+      await postOrder(burrito)
+  } catch (error) {
+      setError('We seem to be experiencing technical difficulties and could not place your order, please try again later!')
   }
+}
 
   return (
     <main className="App">
       <header>
         <h1>Burrito Builder</h1>
-      {error && <h2>{error}</h2>}
         <OrderForm 
           addOrder={addOrder}
         />
       </header>
+      {error ? <h2 className='error-message'>{error}</h2> :
         <Orders 
         orders={orders}
-        />
+        />}
     </main>
   );
 }
-
 export default App;
