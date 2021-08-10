@@ -7,11 +7,16 @@ import OrderForm from '../../components/OrderForm/OrderForm';
 class App extends Component {
   constructor(props) {
     super();
+    this.state = {
+      orders: [],
+      error: ''
+    }
   }
 
   componentDidMount() {
     getOrders()
-      .catch(err => console.error('Error fetching:', err));
+      .then(data => this.setState({ orders: data.orders }))
+      .catch(() => this.setState({ error: 'Error loading orders...please try again later.'} ));
   }
 
   render() {
@@ -27,6 +32,5 @@ class App extends Component {
     );
   }
 }
-
 
 export default App;
