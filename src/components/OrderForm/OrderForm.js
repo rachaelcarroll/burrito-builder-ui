@@ -14,7 +14,7 @@ const OrderForm = ({ addOrder }) => {
             id={i}
             name={ingredient}
             value={ingredient}
-            onClick={(ingredient) => checkIngredients(ingredient)}    
+            onClick={(e) => checkIngredients(e)}    
           >
             {ingredient}
           </button>
@@ -22,12 +22,13 @@ const OrderForm = ({ addOrder }) => {
     });
 
 
-  const checkIngredients = (ingredient) => {
-    if (!ingredients.includes(ingredient)) {
-      setIngredients([...ingredients, ingredient])
+  const checkIngredients = (e) => {
+    e.preventDefault()
+    if (!ingredients.includes(e.target.value)) {
+      setIngredients([...ingredients, e.target.value])
     } else {
       const filteredIngredients = ingredients.filter(item => {
-        return ingredient !== item
+        return e.target.value !== item
       })
       setIngredients(filteredIngredients)
     }
@@ -43,23 +44,28 @@ const OrderForm = ({ addOrder }) => {
     e.preventDefault();
 
     const burritoOrder = {
-      name: name,
-      ingredients: ingredients
+      name,
+      ingredients
     }
 
-    if (ingredients.length === 0) {
-      setError('Please add some ingredients to your burrito!');
-      alert(orderError)
-    } else if (!name) {
-      setError('Please enter a name for this order!')
-      alert(orderError)
-    } else {
-      addOrder(burritoOrder)
-      clearInputs()
-    }
+    addOrder(burritoOrder)
+    clearInputs()
   }
-
-    return (
+  
+  const checkOrder = (e) => {
+    e.preventDefault()
+    if (ingredients.length === 0) {
+    setError('Please add some ingredients to your burrito!');
+    alert(orderError)
+  } else if (!name) {
+    setError('Please enter a name for this order!');
+    alert(orderError)
+  } else {
+    submitOrder(e)
+  }
+}
+    
+  return (
       <form className='order-form'>
         <input
           type='text'
@@ -75,7 +81,7 @@ const OrderForm = ({ addOrder }) => {
           Order: {ingredients.join(', ') || 'Nothing selected' }
         </p>
 
-        <button onClick={(e) => submitOrder(e)}>
+        <button onClick={(e) => checkOrder(e)}>
           Submit Order
         </button>
       </form>
