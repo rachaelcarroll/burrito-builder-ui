@@ -14,3 +14,17 @@ export const postOrder = async (burrito) => {
   const data = await response.json()
   return data
 }
+
+export const checkForErrors = response => {
+  if (response.status === 404) {
+    throw new Error('Oops, something went wrong. Please try again later.');
+  } else if (response.status === 500) {
+    throw new Error(
+      "Our servers seem to be down, please check back later!"
+    );
+  } else if (response.ok) {
+    return response.json();
+  } else {
+    throw new Error('Oops, something went wrong. Please try again!');
+  }
+};
