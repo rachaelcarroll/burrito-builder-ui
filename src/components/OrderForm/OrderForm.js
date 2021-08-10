@@ -1,37 +1,70 @@
 import React, { useState } from 'react';
 import './OrderForm.css';
 
-const OrderForm = () => {
+const OrderForm = ({ addOrder }) => {
   const [ name, setName ] = useState('');
   const [ ingredients, setIngredients ] = useState([]);
 
-  handleSubmit = e => {
-    e.preventDefault();
-    this.clearInputs();
+  const listIngredients = () => {
+    const possibleIngredients = ['beans', 'steak', 'carnitas', 'sofritas', 'lettuce', 'queso fresco', 'pico de gallo', 'hot sauce', 'guacamole', 'jalapenos', 'cilantro', 'sour cream'];
+    return ingredientButtons = possibleIngredients.map((ingredient, i) => {
+      return (
+          <button
+            key={i}
+            id={i}
+            name={ingredient}
+            value={ingredient}
+            onClick={(ingredient) => checkIngredients(ingredient)}    
+          >
+            {ingredient}
+          </button>
+        );
+    });
+  }
+
+  const checkIngredients = (ingredient) => {
+    if (!ingredients.includes(ingredient)) {
+      setIngredients([...ingredients, ingredient])
+    } else {
+      const filteredIngredients = ingredients.filter(item => {
+        return ingredient !== item
+      })
+      setIngredients(filteredIngredients)
+    }
   }
 
   clearInputs = () => {
-    this.setState({name: '', ingredients: []});
+    setName('');
+    setIngredients([]);
   }
 
-  render() {
-    const possibleIngredients = ['beans', 'steak', 'carnitas', 'sofritas', 'lettuce', 'queso fresco', 'pico de gallo', 'hot sauce', 'guacamole', 'jalapenos', 'cilantro', 'sour cream'];
-    const ingredientButtons = possibleIngredients.map(ingredient => {
-      return (
-        <button key={ingredient} name={ingredient} onClick={e => this.handleIngredientChange(e)}>
-          {ingredient}
-        </button>
-      )
-    });
+  const submitOrder = (e) => {
+    e.preventDefault();
+
+    const burritoOrder = {
+      name: name,
+      ingredients: ingredients
+    }
+
+    if (ingredients.length === 0) {
+      alert('Please add some ingredients to your burrito!')
+    } else if (!name) {
+      alert('Please enter a name for this order!')
+    } else {
+      addOrder(burritoOrder)
+      clearInputs()
+    }
+
+  }
 
     return (
-      <form>
+      <form className='order-form'>
         <input
           type='text'
           placeholder='Name'
           name='name'
-          value={this.state.name}
-          onChange={e => this.handleNameChange(e)}
+          value={name}
+          onChange={e => setName(e.target.value)}
         />
 
         { ingredientButtons }
