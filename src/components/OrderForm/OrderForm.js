@@ -81,7 +81,7 @@ const OrderForm = ({ addOrder }) => {
           Order: {ingredients.join(', ') || 'Nothing selected' }
         </p>
 
-        <button onClick={(e) => checkOrder(e)}>
+        <button className='submit' onClick={(e) => checkOrder(e)}>
           Submit Order
         </button>
       </form>
